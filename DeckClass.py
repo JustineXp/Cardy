@@ -1,12 +1,21 @@
 from random import shuffle, choice
+from player import Player
 
 
 class Deck:
 
-    def __init__(self, cards):
+    def __init__(self, cards, players, number_of_cards):
+        self.number_of_players = players
+        self.number_of_cards = number_of_cards
         self.cards = cards
         self.shuffled_cards = []
         self.shuffle()
+        self.remaining_cards = []
+        self.player_decks = []
+        self.decks_creation()
+        self.the_starting_card = {}
+        self.picking_cards = []
+        self.starting_card()
 
     def __repr__(self):
         print([f'{card["name"]} of {card["type"]}' for card in self.cards])
@@ -16,16 +25,16 @@ class Deck:
         shuffle(shuffled_cards)
         self.shuffled_cards = shuffled_cards
 
-    def length(self):
-        return len(self.cards)
+    @classmethod
+    def length(cls, deck):
+        return len(deck)
 
-    def starting_card(self, shuffled_deck):
+    def starting_card(self):
         non_start_cards = ['K', 'Q', 'J', '8', '3', '2', 'A']
-        starting_card = choice(
-            [card for card in shuffled_deck if card['name'] not in non_start_cards])
-        remaining_deck = [
-            card for card in shuffled_deck if card['name'] != starting_card['name']]
-        return starting_card, remaining_deck
+        self.the_starting_card = choice(
+            [card for card in self.remaining_cards if card['name'] not in non_start_cards])
+        self.picking_cards = [
+            card for card in self.remaining_cards if card['name'] != self.the_starting_card['name']]
 
     def issue_cards(self, number, picking_cards):
         cards_issued = [
@@ -41,34 +50,18 @@ class Deck:
             'same_type': [card for card in possible_cards if played_card['type'] == card['type']]}
 
     # CREATION OF PLAYER DECKS
-    @classmethod
-    def decks_creation(cls, number_of_players):
-        player_decks = []
-        rotation_list = list(range(1, number_of_players+1))
+
+    def decks_creation(self):
+        upper_limit = self.number_of_players + 1
+        rotation_list = list(range(1, upper_limit))
         shuffle(rotation_list)
 
-        for player in range(number_of_players):
-            player_decks.append(
+        for player in range(self.number_of_players):
+            self.player_decks.append(
                 {'player': player, 'deck': [], 'rotation_number': rotation_list[player]})
 
-        print(player_decks)
+        number_of_cards = self.number_of_players * self.number_of_cards
+        for deck in self.player_decks:
+            deck['deck'] = self.shuffled_cards[deck['player']:number_of_cards:self.number_of_players]
 
-        return player_decks
-
-    # GENERATE CARDS FOR A PLAYER
-    def player_cards_assigner(self, shuffled_cards, number_of_players, player_decks, no_of_cards):
-        number_of_cards = number_of_players * no_of_cards
-        shuffled_cards_copy = self.shuffled_cards[:]
-        for deck in player_decks:
-            deck['deck'] = shuffled_cards_copy[deck['player']:number_of_cards:number_of_players]
-
-        remaining_deck = shuffled_cards[number_of_cards:]
-
-        for deck in player_decks:
-            print('PLAYER : ' + str(deck['player']+1))
-            print('*'*30)
-
-            for card in deck['deck']:
-                print(card['name'], ' : ', card['type'].title())
-            print()
-        return player_decks, remaining_deck
+        self.remaining_cards = self.shuffled_cards[number_of_cards:]

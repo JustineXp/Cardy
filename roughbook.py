@@ -14,3 +14,16 @@
 
 # print(grouped['same_name_cards'])
 # print(grouped['same_type_cards'])
+
+# import random
+# player_decks = []
+# decks = []
+# rotation_list = list(range(1, 5))
+# random.shuffle(rotation_list)
+
+# for player in range(4):
+#     decks.append(
+#         {'player': player, 'deck': [], 'rotation_number': rotation_list[player]})
+#     player_decks = decks
+
+# print(player_decks)
