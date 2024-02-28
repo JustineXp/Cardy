@@ -9,9 +9,9 @@ class Player:
         self.player_deck = deck
 
     def __str__(self):
-        print(f'PLAYER ID : {self.player_id}')
+        # return (f"PLAYER ID : {self.player_id}")
         for card in self.player_deck:
-            print(f'{card["name"]} : {card["type"]}')
+            return (f"{card['name']} : {card['type']}")
 
     def id_generator(self):
         uid = []
