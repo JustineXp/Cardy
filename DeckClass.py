@@ -20,6 +20,9 @@ class Deck:
     def __repr__(self):
         print([f'{card["name"]} of {card["type"]}' for card in self.cards])
 
+    def __len__(self):
+        return len(self.cards)
+
     def shuffle(self):
         shuffled_cards = self.cards[:]
         shuffle(shuffled_cards)
@@ -34,7 +37,8 @@ class Deck:
         self.the_starting_card = choice(
             [card for card in self.remaining_cards if card['name'] not in non_start_cards])
         self.picking_cards = [
-            card for card in self.remaining_cards if card['name'] != self.the_starting_card['name']]
+            card for card in self.remaining_cards if card['name'] != self.the_starting_card['name'] and card['type'] != self.the_starting_card['type']]
+        print(len(self.picking_cards), 'at creation')
 
     def issue_cards(self, number, picking_cards):
         cards_issued = [

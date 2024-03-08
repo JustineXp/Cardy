@@ -27,6 +27,12 @@ class Player:
         for i in range(len(uid)):
             self.player_id += uid[i]
 
+    def card_picking(self, remaining_deck, number_to_pick):
+        picked_cards = remaining_deck[:number_to_pick]
+        remaining_deck = remaining_deck[number_to_pick:]
+        self.player_deck.extend(picked_cards)
+        return remaining_deck
+
     def play(self):
         print('PLAYING GAME')
         ...

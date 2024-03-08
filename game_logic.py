@@ -11,11 +11,16 @@ def main():
     deck = Deck(cards, players, no_of_cards)
     player_decks = deck.player_decks
     starting_card = deck.the_starting_card
-    picking_cards = deck.remaining_cards
+    picking_cards = deck.picking_cards
     players_with_decks = []
+
+    print(len(deck))
 
     print('PICKING CARDS')
     print(len(picking_cards))
+    print("*"*30)
+    display_option(picking_cards)
+    print("*"*30)
 
     print('STARTING CARD')
     print(f'{starting_card["name"]} : {starting_card["type"]}')
@@ -29,17 +34,16 @@ def main():
     for player in players_with_decks:
         # print(player)
         print(f"PLAYER ID : {player.player_id}")
-        for card in player.player_deck:
-            print(f"{card['name']} : {card['type']}")
+        display_option(player.player_deck)
         print("*"*30)
 
 
-def card_picking(remaining_deck, player_decks, number_to_pick, player):
-    if number_to_pick == 1:
-        picked_card = remaining_deck.pop[0]
-        for deck in player_decks:
-            if deck['player'] == deck[player]:
-                deck['deck'].extend(picked_card)
+def display_option(specific_list):
+    for card in specific_list:
+        if card['name'] == '10':
+            print(f"{card['name']}  : {card['type']}")
+        else:
+            print(f"{card['name']}   : {card['type']}")
 
 
 def number_of_players():
