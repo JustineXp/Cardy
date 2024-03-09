@@ -9,23 +9,31 @@ class Player:
         self.player_deck = deck
 
     def __str__(self):
-        print(f'PLAYER ID : {self.player_id}')
+        # return (f"PLAYER ID : {self.player_id}")
         for card in self.player_deck:
-            print(f'{card["name"]} : {card["type"]}')
+            return (f"{card['name']} : {card['type']}")
+
+    def __iter__(self):
+        return iter(self.player_deck)
 
     def id_generator(self):
-        uid = []
-
+        user_id = []
         for _ in range(5):
             randomLetter = random.choice(Letters)
             randomNumber = random.choice(Numbers)
-            uid.append(randomLetter.upper())
-            uid.append(str(randomNumber))
+            user_id.append(randomLetter.upper())
+            user_id.append(str(randomNumber))
 
-        random.shuffle(uid)
+        random.shuffle(user_id)
 
-        for i in range(len(uid)):
-            self.player_id += uid[i]
+        for i in range(len(user_id)):
+            self.player_id += user_id[i]
+
+    def card_picking(self, remaining_deck, number_to_pick):
+        picked_cards = remaining_deck[:number_to_pick]
+        remaining_deck = remaining_deck[number_to_pick:]
+        self.player_deck.extend(picked_cards)
+        return remaining_deck
 
     def play(self):
         print('PLAYING GAME')

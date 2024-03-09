@@ -1,3 +1,5 @@
+# ..............................................................................................................................
+
 # played_card = {'name': 'J', 'type': 'Flowers'}
 
 # possible_cards = [
@@ -27,3 +29,21 @@
 #     player_decks = decks
 
 # print(player_decks)
+
+
+# ..............................................................................................................................
+
+
+# remaining_deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+# number_to_pick = 2
+
+# picked_cards = remaining_deck[:number_to_pick]
+# remaining_deck = remaining_deck[number_to_pick:]
+
+# print(picked_cards)
+# print(remaining_deck)
+
+# nums = [num for num in remaining_deck if num != 3 and num != 9]
+# print(nums)
+
+# ..............................................................................................................................
