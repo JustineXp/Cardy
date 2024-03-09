@@ -43,4 +43,7 @@
 # print(picked_cards)
 # print(remaining_deck)
 
+# nums = [num for num in remaining_deck if num != 3 and num != 9]
+# print(nums)
+
 # ..............................................................................................................................

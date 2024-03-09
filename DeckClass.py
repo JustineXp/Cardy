@@ -1,5 +1,4 @@
 from random import shuffle, choice
-from player import Player
 
 
 class Deck:
@@ -10,8 +9,8 @@ class Deck:
         self.cards = cards
         self.shuffled_cards = []
         self.shuffle()
-        self.remaining_cards = []
         self.player_decks = []
+        self.remaining_cards = []
         self.decks_creation()
         self.the_starting_card = {}
         self.picking_cards = []
@@ -22,6 +21,9 @@ class Deck:
 
     def __len__(self):
         return len(self.cards)
+
+    def __iter__(self):
+        return iter(self.cards)
 
     def shuffle(self):
         shuffled_cards = self.cards[:]
@@ -34,11 +36,12 @@ class Deck:
 
     def starting_card(self):
         non_start_cards = ['K', 'Q', 'J', '8', '3', '2', 'A']
+        # print(len(self.remaining_cards))
         self.the_starting_card = choice(
             [card for card in self.remaining_cards if card['name'] not in non_start_cards])
+
         self.picking_cards = [
-            card for card in self.remaining_cards if card['name'] != self.the_starting_card['name'] and card['type'] != self.the_starting_card['type']]
-        print(len(self.picking_cards), 'at creation')
+            card for card in self.remaining_cards if card != self.the_starting_card]
 
     def issue_cards(self, number, picking_cards):
         cards_issued = [
@@ -56,8 +59,7 @@ class Deck:
     # CREATION OF PLAYER DECKS
 
     def decks_creation(self):
-        upper_limit = self.number_of_players + 1
-        rotation_list = list(range(1, upper_limit))
+        rotation_list = list(range(1, self.number_of_players + 1))
         shuffle(rotation_list)
 
         for player in range(self.number_of_players):
@@ -66,6 +68,6 @@ class Deck:
 
         number_of_cards = self.number_of_players * self.number_of_cards
         for deck in self.player_decks:
-            deck['deck'] = self.shuffled_cards[deck['player']:number_of_cards:self.number_of_players]
+            deck['deck'] = self.shuffled_cards[deck['player']                                               :number_of_cards:self.number_of_players]
 
         self.remaining_cards = self.shuffled_cards[number_of_cards:]

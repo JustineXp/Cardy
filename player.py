@@ -13,19 +13,21 @@ class Player:
         for card in self.player_deck:
             return (f"{card['name']} : {card['type']}")
 
-    def id_generator(self):
-        uid = []
+    def __iter__(self):
+        return iter(self.player_deck)
 
+    def id_generator(self):
+        user_id = []
         for _ in range(5):
             randomLetter = random.choice(Letters)
             randomNumber = random.choice(Numbers)
-            uid.append(randomLetter.upper())
-            uid.append(str(randomNumber))
+            user_id.append(randomLetter.upper())
+            user_id.append(str(randomNumber))
 
-        random.shuffle(uid)
+        random.shuffle(user_id)
 
-        for i in range(len(uid)):
-            self.player_id += uid[i]
+        for i in range(len(user_id)):
+            self.player_id += user_id[i]
 
     def card_picking(self, remaining_deck, number_to_pick):
         picked_cards = remaining_deck[:number_to_pick]
